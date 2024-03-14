@@ -1,26 +1,26 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPost" },
-    cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPost' },
+    cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
     dependencies = {
       -- Plugin(s) and UI to automatically install LSPs to stdpath
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Install lsp autocompletions
-      "hrsh7th/cmp-nvim-lsp",
+      'hrsh7th/cmp-nvim-lsp',
 
       -- Progress/Status update for LSP
-      { "j-hui/fidget.nvim", opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
-      local map_lsp_keybinds = require("user.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
+      local map_lsp_keybinds = require('user.keymaps').map_lsp_keybinds -- Has to load keymaps before pluginslsp
 
       -- Override tsserver diagnostics to filter out specific messages
       local messages_to_filter = {
-        "This may be converted to an async function.",
+        'This may be converted to an async function.',
         "'_Assertion' is declared but never used.",
         "'__Assertion' is declared but never used.",
         "The signature '(data: string): string' of 'atob' is deprecated.",
@@ -50,8 +50,8 @@ return {
 
       -- Default handlers for LSP
       local default_handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+        ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
+        ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' }),
       }
 
       -- Function to run when neovim connects to a Lsp client
@@ -71,7 +71,7 @@ return {
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       -- LSP servers to install (see list here: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers )
       --  Add any additional override configuration in the following tables. Available keys are:
@@ -85,18 +85,19 @@ return {
         bashls = {},
         cssls = {},
         html = {},
+        gopls = {},
         jsonls = {},
         lua_ls = {
           settings = {
             Lua = {
-              runtime = { version = "LuaJIT" },
+              runtime = { version = 'LuaJIT' },
               workspace = {
                 checkThirdParty = false,
                 -- Tells lua_ls where to find all the Lua files that you have loaded
                 -- for your neovim configuration.
                 library = {
-                  "${3rd}/luv/library",
-                  unpack(vim.api.nvim_get_runtime_file("", true)),
+                  '${3rd}/luv/library',
+                  unpack(vim.api.nvim_get_runtime_file('', true)),
                 },
               },
               telemetry = { enabled = false },
@@ -114,10 +115,7 @@ return {
             maxTsServerMemory = 12000,
           },
           handlers = {
-            ["textDocument/publishDiagnostics"] = vim.lsp.with(
-              tsserver_on_publish_diagnostics_override,
-              {}
-            ),
+            ['textDocument/publishDiagnostics'] = vim.lsp.with(tsserver_on_publish_diagnostics_override, {}),
           },
         },
         yamlls = {},
@@ -132,55 +130,55 @@ return {
         eslint_d = {},
       }
 
-      local manually_installed_servers = { "ocamllsp" }
+      local manually_installed_servers = { 'ocamllsp' }
 
-      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters, linters))
+      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend('force', {}, servers, formatters, linters))
 
       local ensure_installed = vim.tbl_filter(function(name)
         return not vim.tbl_contains(manually_installed_servers, name)
       end, mason_tools_to_install)
 
-      require("mason-tool-installer").setup({
+      require('mason-tool-installer').setup {
         auto_update = true,
         run_on_start = true,
         start_delay = 3000,
         debounce_hours = 12,
         ensure_installed = ensure_installed,
-      })
+      }
 
       -- Iterate over our servers and set them up
       for name, config in pairs(servers) do
-        require("lspconfig")[name].setup({
+        require('lspconfig')[name].setup {
           capabilities = capabilities,
           filetypes = config.filetypes,
-          handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
+          handlers = vim.tbl_deep_extend('force', {}, default_handlers, config.handlers or {}),
           on_attach = on_attach,
           settings = config.settings,
-        })
+        }
       end
 
       -- Setup mason so it can manage 3rd party LSP servers
-      require("mason").setup({
+      require('mason').setup {
         ui = {
-          border = "rounded",
+          border = 'rounded',
         },
-      })
+      }
 
-      require("mason-lspconfig").setup()
+      require('mason-lspconfig').setup()
 
       -- Configure borderd for LspInfo ui
-      require("lspconfig.ui.windows").default_options.border = "rounded"
+      require('lspconfig.ui.windows').default_options.border = 'rounded'
 
       -- Configure diagnostics border
-      vim.diagnostic.config({
+      vim.diagnostic.config {
         float = {
-          border = "rounded",
+          border = 'rounded',
         },
-      })
+      }
     end,
   },
   {
-    "stevearc/conform.nvim",
+    'stevearc/conform.nvim',
     opts = {
       notify_on_error = true,
       format_after_save = {
@@ -189,9 +187,9 @@ return {
         lsp_fallback = true,
       },
       formatters_by_ft = {
-        javascript = { { "eslint_d", "eslint" }, { "prettierd", "prettier" } },
-        typescript = { { "eslint_d", "eslint" }, { "prettierd", "prettier" } },
-        lua = { "stylua" },
+        javascript = { { 'eslint_d', 'eslint' }, { 'prettierd', 'prettier' } },
+        typescript = { { 'eslint_d', 'eslint' }, { 'prettierd', 'prettier' } },
+        lua = { 'stylua' },
       },
     },
   },
