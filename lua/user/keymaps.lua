@@ -305,7 +305,7 @@ M.map_lsp_keybinds = function(buffer_number)
   nnoremap('<leader>ps', require('telescope.builtin').lsp_workspace_symbols, { desc = 'LSP: [P]roject [S]ymbols', buffer = buffer_number })
 
   -- See `:help K` for why this keymap
-  nnoremap('K', vim.lsp.buf.hover, { desc = 'LSP: Hover Documentation', buffer = buffer_number })
+  nnoremap('gh', vim.lsp.buf.hover, { desc = 'LSP: Hover Documentation', buffer = buffer_number })
   nnoremap('<leader>k', vim.lsp.buf.signature_help, { desc = 'LSP: Signature Documentation', buffer = buffer_number })
   inoremap('<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP: Signature Documentation', buffer = buffer_number })
 
