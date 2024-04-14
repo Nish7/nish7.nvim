@@ -4,6 +4,25 @@ return {
     name = 'everblush',
     config = function()
       vim.cmd.colorscheme 'everblush'
+
+      -- Custom Color Preferences
+      vim.api.nvim_set_hl(0, 'Normal', { fg = '#dadada', bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#dadada', bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'CmpItemAbbr', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#171717' })
+      vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'MsgArea', { fg = '#dadada', bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#232a2d', bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'LineNr', { fg = '#232a2d', bg = '#0e0e0e' })
     end,
   },
 

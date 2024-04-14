@@ -71,10 +71,10 @@ nnoremap('<leader>yd', 'yyP', { silent = false })
 -- Save and Quit with leader key
 nnoremap('<leader>z', '<cmd>wq<cr>', { silent = false })
 
--- Map Oil to <leader>e
 nnoremap('<leader>e', function()
   require('oil').toggle_float()
 end)
+-- Map Oil to <leader>e
 
 -- Map Oil to open
 nnoremap('<leader>oe', function()
