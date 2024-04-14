@@ -65,6 +65,9 @@ nnoremap('<leader>w', '<cmd>w<cr>', { silent = false })
 -- Quit with leader key
 nnoremap('<leader>q', '<cmd>q<cr>', { silent = false })
 
+-- duplicate a line
+nnoremap('<leader>yd', 'yyP', { silent = false })
+
 -- Save and Quit with leader key
 nnoremap('<leader>z', '<cmd>wq<cr>', { silent = false })
 

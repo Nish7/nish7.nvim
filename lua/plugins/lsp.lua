@@ -4,15 +4,10 @@ return {
     event = { 'BufReadPost' },
     cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
     dependencies = {
-      -- Plugin(s) and UI to automatically install LSPs to stdpath
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Install lsp autocompletions
       'hrsh7th/cmp-nvim-lsp',
-
-      -- Progress/Status update for LSP
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
