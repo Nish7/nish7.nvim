@@ -11,7 +11,6 @@ return {
       vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0e0e0e' })
-      vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })

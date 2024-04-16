@@ -12,7 +12,9 @@ return {
           show_end = false,
         },
         indent = {
+          char = '▏',
           highlight = { 'CursorLineNr' },
+          smart_indent_cap = true,
         },
       }
     end,
