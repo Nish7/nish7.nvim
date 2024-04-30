@@ -5,22 +5,6 @@ return {
     config = function()
       local harpoon = require 'harpoon.mark'
 
-      local function truncate_branch_name(branch)
-        if not branch or branch == '' then
-          return ''
-        end
-
-        -- Match the branch name to the specified format
-        local user, team, ticket_number = string.match(branch, '^(%w+)/(%w+)%-(%d+)')
-
-        -- If the branch name matches the format, display {user}/{team}-{ticket_number}, otherwise display the full branch name
-        if ticket_number then
-          return user .. '/' .. team .. '-' .. ticket_number
-        else
-          return branch
-        end
-      end
-
       local function harpoon_component()
         local total_marks = harpoon.get_length()
 
@@ -61,6 +45,8 @@ return {
           },
         },
       }
+
+      vim.api.nvim_set_hl(0, 'Normal', { fg = '#dadada', bg = '#0e0e0e' })
     end,
   },
 }
