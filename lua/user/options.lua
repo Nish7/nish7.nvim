@@ -2,6 +2,10 @@
 vim.opt.nu = true
 vim.opt.rnu = true
 
+-- disable netrw
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+
 -- Set tabs to 4 spaces
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -9,7 +13,7 @@ vim.opt.expandtab = true
 
 -- Enable auto indenting and set it to spaces
 vim.opt.smartindent = true
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 
 -- Enable smart indenting (see https://stackoverflow.com/questions/1204149/smart-wrap-in-vim)
 vim.opt.breakindent = true
