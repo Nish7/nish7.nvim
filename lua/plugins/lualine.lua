@@ -32,7 +32,7 @@ return {
         sections = {
           lualine_a = {},
           lualine_b = {
-            { 'branch', icon = '', fmt = truncate_branch_name },
+            { 'branch', icon = '' },
             harpoon_component,
             'diff',
             'diagnostics',
@@ -45,8 +45,6 @@ return {
           },
         },
       }
-
-      vim.api.nvim_set_hl(0, 'Normal', { fg = '#dadada', bg = '#0e0e0e' })
     end,
   },
 }

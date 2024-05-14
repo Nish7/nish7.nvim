@@ -1,19 +1,19 @@
 return {
   {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
+    'rcarriga/nvim-notify',
+    event = 'VeryLazy',
     config = function()
-      local notify = require("notify")
+      local notify = require 'notify'
 
-      local filtered_message = { "No information available" }
+      local filtered_message = { 'No information available' }
 
       -- Override notify function to filter out messages
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.notify = function(message, level, opts)
-        local merged_opts = vim.tbl_extend("force", {
+        local merged_opts = vim.tbl_extend('force', {
           on_open = function(win)
             local buf = vim.api.nvim_win_get_buf(win)
-            vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
           end,
         }, opts or {})
 
@@ -21,12 +21,12 @@ return {
           if message == msg then
             return
           end
+          return notify(message, level)
         end
-        return notify(message, level, merged_opts)
       end
 
       -- Update colors to use catpuccino colors
-      vim.cmd([[
+      vim.cmd [[
         highlight NotifyERRORBorder guifg=#ed8796
         highlight NotifyERRORIcon guifg=#ed8796
         highlight NotifyERRORTitle  guifg=#ed8796
@@ -36,7 +36,7 @@ return {
         highlight NotifyWARNBorder guifg=#f5a97f
         highlight NotifyWARNIcon guifg=#f5a97f
         highlight NotifyWARNTitle guifg=#f5a97f
-      ]])
+      ]]
     end,
   },
 }
