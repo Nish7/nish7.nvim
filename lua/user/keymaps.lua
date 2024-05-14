@@ -71,16 +71,16 @@ nnoremap('<leader>yd', 'yyP', { silent = false })
 -- Save and Quit with leader key
 nnoremap('<leader>z', '<cmd>wq<cr>', { silent = false })
 
--- nnoremap('<leader>e', function()
---   require('oil').toggle_float()
--- end)
--- -- Map Oil to <leader>e
---
--- -- Map Oil to open
--- nnoremap('<leader>oe', function()
---   require('oil').open()
--- end)
+nnoremap('<leader>e', function()
+  require('oil').toggle_float()
+end)
+-- Map Oil to <leader>e
 
+-- Map Oil to open
+nnoremap('<leader>oe', function()
+  require('oil').open()
+end)
+--
 -- Center buffer while navigating
 nnoremap('<C-u>', '<C-u>zz')
 nnoremap('<C-d>', '<C-d>zz')
