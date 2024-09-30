@@ -80,7 +80,16 @@ return {
         bashls = {},
         cssls = {},
         html = {},
-        gopls = {},
+        gopls = {
+          gofumpt = true, -- Use gofumpt formatting
+          codelenses = {
+            generate = true, -- Enable auto-generation of functions, etc.
+          },
+          analyses = {
+            unusedparams = true, -- Identify unused parameters
+            shadow = true, -- Detect shadowed variables
+          },
+        },
         jsonls = {},
         lua_ls = {
           settings = {

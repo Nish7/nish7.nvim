@@ -6,7 +6,6 @@ return {
     end,
     event = { 'BufEnter' },
     dependencies = {
-      -- Additional text objects for treesitter
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
@@ -16,7 +15,6 @@ return {
           'bash',
           'c',
           'css',
-          'gleam',
           'graphql',
           'go',
           'html',
@@ -24,13 +22,9 @@ return {
           'json',
           'lua',
           'markdown',
-          'ocaml',
-          'ocaml_interface',
-          'prisma',
           'tsx',
           'typescript',
           'vim',
-          -- "yaml", This is currently borked see: https://github.com/ikatyang/tree-sitter-yaml/issues/53
         },
         sync_install = false,
         highlight = {
@@ -38,7 +32,6 @@ return {
         },
         indent = {
           enable = true,
-          disable = { 'ocaml', 'ocaml_interface' },
         },
         autopairs = {
           enable = true,
@@ -46,10 +39,6 @@ return {
         autotag = {
           enable = true,
         },
-        --[[ context_commentstring = {
-					enable = true,
-					enable_autocmd = false,
-				}, ]]
         incremental_selection = {
           enable = true,
           keymaps = {
