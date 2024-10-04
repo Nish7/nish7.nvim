@@ -7,12 +7,12 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
 -- Set tabs to 4 spaces
-vim.opt.tabstop = 2
+vim.opt.tabstop = 4
 vim.opt.expandtab = true
 
 -- Enable auto indenting and set it to spaces
 vim.opt.smartindent = true
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 
 -- Enable smart indenting (see https://stackoverflow.com/questions/1204149/smart-wrap-in-vim)
 vim.opt.breakindent = true
@@ -31,6 +31,9 @@ vim.g.maplocalleader = ' '
 -- Better splitting
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+-- Disable swap fils
+vim.o.swapfile = false
 
 -- Enable mouse mode
 vim.opt.mouse = 'a'

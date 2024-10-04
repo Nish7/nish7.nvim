@@ -31,7 +31,7 @@ return {
           enable = true,
         },
         indent = {
-          enable = true,
+          enable = false,
         },
         autopairs = {
           enable = true,
