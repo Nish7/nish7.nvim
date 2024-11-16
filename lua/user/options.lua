@@ -14,6 +14,9 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.shiftwidth = 4
 
+-- Scroll
+vim.opt.mousescroll = 'ver:1,hor:2'
+
 -- Enable smart indenting (see https://stackoverflow.com/questions/1204149/smart-wrap-in-vim)
 vim.opt.breakindent = true
 

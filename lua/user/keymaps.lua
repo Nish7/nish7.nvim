@@ -195,14 +195,8 @@ nnoremap('<leader>f', function()
   vim.lsp.buf.format()
 end, { desc = 'Format the current buffer' })
 
--- Press leader rw to rotate open windows
-nnoremap('<leader>rw', ':RotateWindows<cr>', { desc = '[R]otate [W]indows' })
-
 -- Press gx to open the link under the cursor
 nnoremap('gx', ':sil !open <cWORD><cr>', { silent = true })
-
--- TSC autocommand keybind to run TypeScripts tsc
-nnoremap('<leader>tc', ':TSC<cr>', { desc = '[T]ypeScript [C]ompile' })
 
 -- Harpoon keybinds --
 -- Open harpoon ui
