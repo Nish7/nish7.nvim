@@ -56,6 +56,8 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'CmpItemAbbr', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#0e0e0e' })
+      vim.api.nvim_set_hl(0, 'FloatTitle', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#232a2d', bg = '#0e0e0e' })
       vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#232a2d', bg = '#0e0e0e' })
