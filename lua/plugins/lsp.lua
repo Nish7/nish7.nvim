@@ -41,6 +41,7 @@ return {
             shadow = true,
           },
         },
+        texlab = {},
         jsonls = {},
         lua_ls = {
           settings = {
@@ -58,6 +59,7 @@ return {
           },
         },
         marksman = {},
+        zls = {},
         ocamllsp = {},
         nil_ls = {},
         pyright = {},

@@ -24,6 +24,7 @@ return {
           'markdown',
           'tsx',
           'typescript',
+          'zig',
           'vim',
         },
         sync_install = false,
