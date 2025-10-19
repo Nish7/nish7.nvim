@@ -60,6 +60,7 @@ return {
         },
         marksman = {},
         zls = {},
+        jdtls = {},
         ocamllsp = {},
         nil_ls = {},
         pyright = {},
@@ -88,8 +89,6 @@ return {
       require('mason-tool-installer').setup {
         auto_update = true,
         run_on_start = true,
-        start_delay = 1000,
-        debounce_hours = 12,
         ensure_installed = ensure_installed,
       }
 
@@ -103,6 +102,8 @@ return {
           settings = config.settings,
         }
       end
+
+      vim.g.zig_fmt_autosave = 0
 
       -- Setup mason so it can manage 3rd party LSP servers
       require('mason').setup {

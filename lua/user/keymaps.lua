@@ -325,7 +325,7 @@ nnoremap('zM', require('ufo').closeAllFolds)
 
 -- Insert --
 -- Map jj to <esc>
-inoremap('jj', '<esc>')
+-- inoremap('jj', '<esc>')
 
 -- Visual --
 -- Disable Space bar since it'll be used as the leader key

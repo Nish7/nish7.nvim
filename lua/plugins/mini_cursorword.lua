@@ -1,6 +1,6 @@
 return {
-	"echasnovski/mini.cursorword",
-	version = "*",
-	lazy = true,
-	event = "CursorMoved",
+  'echasnovski/mini.cursorword',
+  version = '*',
+  lazy = true,
+  event = 'CursorMoved',
 }
