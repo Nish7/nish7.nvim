@@ -8,7 +8,6 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
-      { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
       local map_lsp_keybinds = require('user.keymaps').map_lsp_keybinds -- Has to load keymaps before pluginslsp
@@ -30,6 +29,7 @@ return {
         bashls = {},
         cssls = {},
         html = {},
+      ts_ls = {},
         clangd = {},
         gopls = {
           gofumpt = true,
@@ -74,21 +74,17 @@ return {
         stylua = {},
       }
 
-      local linters = {
-        eslint_d = {},
-      }
-
       local manually_installed_servers = { 'ocamllsp' }
 
-      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend('force', {}, servers, formatters, linters))
+      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend('force', {}, servers, formatters))
 
       local ensure_installed = vim.tbl_filter(function(name)
         return not vim.tbl_contains(manually_installed_servers, name)
       end, mason_tools_to_install)
 
       require('mason-tool-installer').setup {
-        auto_update = true,
-        run_on_start = true,
+        auto_update = false,
+        run_on_start = false,
         ensure_installed = ensure_installed,
       }
 
@@ -130,14 +126,15 @@ return {
     config = function()
       local conform = require 'conform'
       local formatters_by_ft = {
-        javascript = { { 'eslint_d', 'eslint' }, { 'prettierd', 'prettier' } },
-        typescript = { { 'eslint_d', 'eslint' }, { 'prettierd', 'prettier' } },
+        javascript = { 'eslint_d', 'eslint', 'prettierd', 'prettier' },
+        typescript = { 'eslint_d', 'eslint', 'prettierd', 'prettier' },
         lua = { 'stylua' },
         python = { 'black' },
         c = { 'clang-format' },
       }
       local opts = {
         notify_on_error = true,
+        stop_after_first = true,
         format_on_save = function(bufnr)
           if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
             return

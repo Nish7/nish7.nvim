@@ -3,8 +3,6 @@ local vnoremap = require('user.keymap_utils').vnoremap
 local inoremap = require('user.keymap_utils').inoremap
 local tnoremap = require('user.keymap_utils').tnoremap
 local xnoremap = require('user.keymap_utils').xnoremap
-local harpoon_ui = require 'harpoon.ui'
-local harpoon_mark = require 'harpoon.mark'
 local utils = require 'user.utils'
 
 local M = {}
@@ -201,43 +199,43 @@ nnoremap('gx', ':sil !open <cWORD><cr>', { silent = true })
 -- Harpoon keybinds --
 -- Open harpoon ui
 nnoremap('<leader>ho', function()
-  harpoon_ui.toggle_quick_menu()
+  require('harpoon.ui').toggle_quick_menu()
 end)
 
 -- Add current file to harpoon
 nnoremap('<leader>ha', function()
-  harpoon_mark.add_file()
+  require('harpoon.mark').add_file()
 end)
 
 -- Remove current file from harpoon
 nnoremap('<leader>hr', function()
-  harpoon_mark.rm_file()
+  require('harpoon.mark').rm_file()
 end)
 
 -- Remove all files from harpoon
 nnoremap('<leader>hc', function()
-  harpoon_mark.clear_all()
+  require('harpoon.mark').clear_all()
 end)
 
 -- Quickly jump to harpooned files
 nnoremap('<leader>1', function()
-  harpoon_ui.nav_file(1)
+  require('harpoon.ui').nav_file(1)
 end)
 
 nnoremap('<leader>2', function()
-  harpoon_ui.nav_file(2)
+  require('harpoon.ui').nav_file(2)
 end)
 
 nnoremap('<leader>3', function()
-  harpoon_ui.nav_file(3)
+  require('harpoon.ui').nav_file(3)
 end)
 
 nnoremap('<leader>4', function()
-  harpoon_ui.nav_file(4)
+  require('harpoon.ui').nav_file(4)
 end)
 
 nnoremap('<leader>5', function()
-  harpoon_ui.nav_file(5)
+  require('harpoon.ui').nav_file(5)
 end)
 
 -- Git keymaps --
@@ -291,6 +289,10 @@ M.map_lsp_keybinds = function(buffer_number)
   nnoremap('<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP: [C]ode [A]ction', buffer = buffer_number })
 
   nnoremap('gd', vim.lsp.buf.definition, { desc = 'LSP: [G]oto [D]efinition', buffer = buffer_number })
+  nnoremap('ggd', function()
+    vim.cmd 'vsplit'
+    vim.lsp.buf.definition()
+  end, { desc = 'LSP: [G]oto [D]efinition in split', buffer = buffer_number })
 
   -- Telescope LSP keybinds --
   nnoremap('gr', require('telescope.builtin').lsp_references, { desc = 'LSP: [G]oto [R]eferences', buffer = buffer_number })

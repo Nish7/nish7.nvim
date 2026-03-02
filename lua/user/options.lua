@@ -25,7 +25,7 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
 -- Disable text wrap
-vim.opt.wrap = true
+vim.opt.wrap = false
 
 -- Set leader key to space
 vim.g.mapleader = ' '
@@ -49,7 +49,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Decrease updatetime to 200ms
-vim.opt.updatetime = 50
+vim.opt.updatetime = 200
 
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = { 'menuone', 'noselect' }
