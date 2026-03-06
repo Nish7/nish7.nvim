@@ -122,6 +122,14 @@ nnoremap('U', '<C-r>')
 -- Turn off highlighted results
 nnoremap('<leader>no', '<cmd>noh<cr>')
 
+-- Toggle line numbers (number + relative number)
+nnoremap('<leader>tn', function()
+  local numbers_enabled = vim.wo.number or vim.wo.relativenumber
+
+  vim.wo.number = not numbers_enabled
+  vim.wo.relativenumber = not numbers_enabled
+end, { desc = '[T]oggle line [N]umbers' })
+
 -- Diagnostics
 
 -- Goto next diagnostic of any severity

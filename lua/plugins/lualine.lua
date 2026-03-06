@@ -5,6 +5,16 @@ return {
     config = function()
       local harpoon = require 'harpoon.mark'
 
+      local function clear_statusline_bg()
+        vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'NONE' })
+
+        local lualine_hls = vim.fn.getcompletion('lualine_', 'highlight')
+        for _, hl in ipairs(lualine_hls) do
+          vim.cmd('highlight ' .. hl .. ' guibg=NONE ctermbg=NONE')
+        end
+      end
+
       local function harpoon_component()
         local total_marks = harpoon.get_length()
 
@@ -45,6 +55,13 @@ return {
           },
         },
       }
+
+      clear_statusline_bg()
+      local group = vim.api.nvim_create_augroup('lualine_transparent_bg', { clear = true })
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = group,
+        callback = clear_statusline_bg,
+      })
     end,
   },
 }

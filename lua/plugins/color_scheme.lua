@@ -1,28 +1,82 @@
-local function detect_macos_background()
-  if vim.fn.has('macunix') == 0 then
-    return nil
+local macos_background_inflight = false
+local macos_background_callbacks = {}
+
+local function parse_macos_background(output)
+  local normalized = (output or ''):gsub('%s+', ''):lower()
+  if normalized == 'true' then
+    return 'dark'
   end
 
-  local output = vim.fn.system {
+  if normalized == 'false' then
+    return 'light'
+  end
+
+  return nil
+end
+
+local function detect_macos_background(callback)
+  if vim.fn.has 'macunix' == 0 then
+    callback(nil)
+    return
+  end
+
+  table.insert(macos_background_callbacks, callback)
+  if macos_background_inflight then
+    return
+  end
+
+  macos_background_inflight = true
+
+  local function flush(result)
+    macos_background_inflight = false
+
+    local callbacks = macos_background_callbacks
+    macos_background_callbacks = {}
+
+    for _, cb in ipairs(callbacks) do
+      cb(result)
+    end
+  end
+
+  local cmd = {
     'osascript',
     '-e',
     'tell application "System Events" to tell appearance preferences to get dark mode',
   }
 
-  if vim.v.shell_error ~= 0 then
-    return nil
+  if vim.system then
+    vim.system(cmd, { text = true }, function(obj)
+      local result = nil
+      if obj.code == 0 then
+        result = parse_macos_background(obj.stdout)
+      end
+
+      vim.schedule(function()
+        flush(result)
+      end)
+    end)
+    return
   end
 
-  output = output:gsub('%s+', ''):lower()
-  if output == 'true' then
-    return 'dark'
-  end
+  local stdout = {}
+  vim.fn.jobstart(cmd, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if data then
+        stdout = data
+      end
+    end,
+    on_exit = function(_, code)
+      local result = nil
+      if code == 0 then
+        result = parse_macos_background(table.concat(stdout, '\n'))
+      end
 
-  if output == 'false' then
-    return 'light'
-  end
-
-  return nil
+      vim.schedule(function()
+        flush(result)
+      end)
+    end,
+  })
 end
 
 local function apply_rose_pine_overrides()
@@ -32,9 +86,8 @@ local function apply_rose_pine_overrides()
   vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0e0e0e' })
   vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0e0e0e' })
 
-  vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#232a2d', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#232a2d', bg = '#0e0e0e' })
+  vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#232a2d', bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#232a2d', bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#171717' })
   vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#171717' })
 
@@ -50,8 +103,19 @@ local function apply_rose_pine_overrides()
   vim.api.nvim_set_hl(0, 'ZenBg', { bg = '#0e0e0e' })
 end
 
-local function apply_theme_from_system()
-  local background = detect_macos_background() or vim.o.background
+-- local function apply_shared_overrides()
+--   vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
+--   vim.api.nvim_set_hl(0, 'LineNr', { bg = 'NONE' })
+--   vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'NONE' })
+--   vim.api.nvim_set_hl(0, 'CursorLineSign', { bg = 'NONE' })
+-- end
+
+local function set_theme(background)
+  if background == vim.g.current_theme_background then
+    return
+  end
+
+  vim.g.current_theme_background = background
   vim.o.background = background
 
   if background == 'light' then
@@ -59,17 +123,21 @@ local function apply_theme_from_system()
     return
   end
 
-  vim.cmd.colorscheme 'rose-pine'
+  vim.cmd.colorscheme 'gruvbox'
   apply_rose_pine_overrides()
 end
 
+local function apply_theme_from_system()
+  set_theme(vim.o.background)
+
+  detect_macos_background(function(background)
+    if background ~= nil then
+      set_theme(background)
+    end
+  end)
+end
+
 return {
-  {
-    'projekt0n/github-nvim-theme',
-    name = 'github-theme',
-    lazy = false,
-    priority = 1000,
-  },
   {
     'navarasu/onedark.nvim',
     priority = 1000, -- make sure to load this before all the other start plugins
@@ -80,14 +148,12 @@ return {
     end,
   },
   {
-    'ribru17/bamboo.nvim',
-    lazy = false,
+    'ellisonleao/gruvbox.nvim',
     priority = 1000,
     config = function()
-      -- require('bamboo').setup {
-      --   -- optional configuration here
-      -- }
-      -- require('bamboo').load()
+      require('gruvbox').setup {
+        contrast = 'soft',
+      }
     end,
   },
   {
