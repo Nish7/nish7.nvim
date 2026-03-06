@@ -8,9 +8,11 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
+      'SmiteshP/nvim-navic',
     },
     config = function()
       local map_lsp_keybinds = require('user.keymaps').map_lsp_keybinds -- Has to load keymaps before pluginslsp
+      local has_navic, navic = pcall(require, 'nvim-navic')
 
       local default_handlers = {
         ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
@@ -18,7 +20,10 @@ return {
       }
 
       ---@diagnostic disable-next-line: unused-local
-      local on_attach = function(_client, buffer_number)
+      local on_attach = function(client, buffer_number)
+        if has_navic and client.server_capabilities.documentSymbolProvider then
+          navic.attach(client, buffer_number)
+        end
         map_lsp_keybinds(buffer_number)
       end
 
@@ -125,12 +130,14 @@ return {
     'stevearc/conform.nvim',
     config = function()
       local conform = require 'conform'
+      vim.g.disable_autoformat = true
       local formatters_by_ft = {
         javascript = { 'eslint_d', 'eslint', 'prettierd', 'prettier' },
         typescript = { 'eslint_d', 'eslint', 'prettierd', 'prettier' },
         lua = { 'stylua' },
         python = { 'black' },
         c = { 'clang-format' },
+        zig = { 'zigfmt' },
       }
       local opts = {
         notify_on_error = true,

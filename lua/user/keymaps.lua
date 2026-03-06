@@ -196,11 +196,6 @@ nnoremap('<leader>m', ':MaximizerToggle<cr>')
 -- Resize split windows to be equal size
 nnoremap('<leader>=', '<C-w>=')
 
--- Press leader f to format
-nnoremap('<leader>f', function()
-  vim.lsp.buf.format()
-end, { desc = 'Format the current buffer' })
-
 -- Press gx to open the link under the cursor
 nnoremap('gx', ':sil !open <cWORD><cr>', { silent = true })
 

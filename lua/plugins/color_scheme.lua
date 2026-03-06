@@ -80,35 +80,28 @@ local function detect_macos_background(callback)
 end
 
 local function apply_rose_pine_overrides()
-  vim.api.nvim_set_hl(0, 'Normal', { fg = '#dadada', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#dadada', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0e0e0e' })
+  vim.api.nvim_set_hl(0, 'Normal', { fg = '#dadada', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#dadada', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#1D2021' })
 
   vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#232a2d', bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#232a2d', bg = 'NONE' })
-  vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#171717' })
-  vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#171717' })
+  vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2A2E2F' })
+  vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#2A2E2F' })
 
-  vim.api.nvim_set_hl(0, 'CmpItemAbbr', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'FloatTitle', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#232a2d', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'MsgArea', { fg = '#dadada', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#232a2d', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'LineNr', { fg = '#232a2d', bg = '#0e0e0e' })
-  vim.api.nvim_set_hl(0, 'ZenBg', { bg = '#0e0e0e' })
+  vim.api.nvim_set_hl(0, 'CmpItemAbbr', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'FloatTitle', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#232a2d', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'MsgArea', { fg = '#dadada', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#232a2d', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'LineNr', { fg = '#232a2d', bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'ZenBg', { bg = '#1D2021' })
 end
-
--- local function apply_shared_overrides()
---   vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
---   vim.api.nvim_set_hl(0, 'LineNr', { bg = 'NONE' })
---   vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'NONE' })
---   vim.api.nvim_set_hl(0, 'CursorLineSign', { bg = 'NONE' })
--- end
 
 local function set_theme(background)
   if background == vim.g.current_theme_background then
@@ -154,13 +147,7 @@ return {
       require('gruvbox').setup {
         contrast = 'soft',
       }
-    end,
-  },
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    priority = 1000,
-    config = function()
+
       apply_theme_from_system()
 
       local group = vim.api.nvim_create_augroup('macos_theme_sync', { clear = true })
@@ -172,4 +159,4 @@ return {
       })
     end,
   },
-}
+  }

@@ -1,6 +1,6 @@
--- Enable relative line numbers
-vim.opt.nu = true
-vim.opt.rnu = true
+-- Disable line numbers by default
+vim.opt.nu = false
+vim.opt.rnu = false
 
 -- disable netrw
 vim.g.loaded_netrwPlugin = 1
