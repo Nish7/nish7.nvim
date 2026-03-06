@@ -36,44 +36,6 @@ return {
         end
       end
 
-      local path_depth_limit = 2
-
-      local function limited_filename()
-        local filename = vim.fn.expand('%:t')
-        if filename == '' then
-          return ''
-        end
-
-        local rel = vim.fn.fnamemodify('%', ':~:.')
-        if rel == '' then
-          return filename
-        end
-
-        local segments = vim.split(rel, '[\\\\/]', { trimempty = true })
-        if #segments == 0 then
-          return filename
-        end
-
-        local file = segments[#segments]
-        table.remove(segments, #segments)
-
-        if #segments == 0 then
-          return file
-        end
-
-        local start_idx = math.max(1, #segments - path_depth_limit + 1)
-        local kept = {}
-        for i = start_idx, #segments do
-          kept[#kept + 1] = segments[i]
-        end
-
-        if #kept == 0 then
-          return file
-        end
-
-        return table.concat(kept, '/') .. '/' .. file
-      end
-
       local function harpoon_component()
         local total_marks = harpoon.get_length()
 
@@ -119,7 +81,7 @@ return {
             'diagnostics',
           },
           lualine_c = {
-            { limited_filename },
+            { 'filename', path = 1 },
             { navic_component },
           },
           lualine_x = {
