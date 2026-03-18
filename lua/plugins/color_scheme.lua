@@ -101,6 +101,8 @@ local function apply_rose_pine_overrides()
   vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#232a2d', bg = '#1D2021' })
   vim.api.nvim_set_hl(0, 'LineNr', { fg = '#232a2d', bg = '#1D2021' })
   vim.api.nvim_set_hl(0, 'ZenBg', { bg = '#1D2021' })
+  vim.api.nvim_set_hl(0, 'MiniCursorword', { bg = '#3a3a3a', underline = false })
+  vim.api.nvim_set_hl(0, 'MiniCursorwordCurrent', { bg = '#3a3a3a', underline = false })
 end
 
 local function set_theme(background)

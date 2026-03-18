@@ -87,7 +87,13 @@ nnoremap('}', '}zz')
 nnoremap('N', 'Nzz')
 nnoremap('n', 'nzz')
 nnoremap('G', 'Gzz')
-nnoremap('gg', 'ggzz')
+nnoremap('gg', function()
+  if vim.v.count > 0 then
+    vim.cmd('normal! ' .. vim.v.count .. 'gg')
+  else
+    vim.cmd('normal! ggzz')
+  end
+end)
 nnoremap('<C-i>', '<C-i>zz')
 nnoremap('<C-o>', '<C-o>zz')
 nnoremap('%', '%zz')
@@ -243,6 +249,10 @@ end)
 
 -- Git keymaps --
 nnoremap('<leader>gb', ':Gitsigns toggle_current_line_blame<cr>')
+nnoremap('<leader>gh', function()
+  require('gitsigns').preview_hunk_inline()
+end, { desc = 'Preview hunk (inline)' })
+
 nnoremap('<leader>gf', function()
   local cmd = {
     'sort',
@@ -265,6 +275,21 @@ nnoremap('<leader>sb', require('telescope.builtin').buffers, { desc = '[S]earch 
 nnoremap('<leader>sf', function()
   require('telescope.builtin').find_files { hidden = true }
 end, { desc = '[S]earch [F]iles' })
+nnoremap('<leader>fs', function()
+  local actions = require 'telescope.actions'
+  require('telescope.builtin').find_files {
+    hidden = true,
+    attach_mappings = function(prompt_bufnr, map)
+      local function select_vertical()
+        actions.select_vertical(prompt_bufnr)
+      end
+
+      map('i', '<CR>', select_vertical)
+      map('n', '<CR>', select_vertical)
+      return true
+    end,
+  }
+end, { desc = '[F]ind [S]files (vsplit)' })
 nnoremap('<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 nnoremap('<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 
@@ -327,10 +352,35 @@ end, { desc = '[O]pen [C]opilot panel' })
 -- nvim-ufo keybinds
 nnoremap('zR', require('ufo').openAllFolds)
 nnoremap('zM', require('ufo').closeAllFolds)
+nnoremap('zA', function()
+  local has_closed = false
+  local line_count = vim.api.nvim_buf_line_count(0)
+  for lnum = 1, line_count do
+    if vim.fn.foldclosed(lnum) ~= -1 then
+      has_closed = true
+      break
+    end
+  end
+
+  if has_closed then
+    require('ufo').openAllFolds()
+  else
+    require('ufo').closeAllFolds()
+  end
+end, { desc = 'UFO: Toggle all folds' })
+nnoremap('zr', require('ufo').openFoldsExceptKinds, { desc = 'UFO: Open folds (except kinds)' })
+nnoremap('zm', require('ufo').closeFoldsWith, { desc = 'UFO: Close folds (count = level)' })
+nnoremap('zo', function()
+  vim.cmd 'normal! zo'
+end, { desc = 'Fold: Open current scope' })
+nnoremap('zc', function()
+  vim.cmd 'normal! zc'
+end, { desc = 'Fold: Close current scope' })
 
 -- Insert --
--- Map jj to <esc>
--- inoremap('jj', '<esc>')
+-- Fast escape chord
+inoremap('jk', '<esc>')
+inoremap('kj', '<esc>')
 
 -- Visual --
 -- Disable Space bar since it'll be used as the leader key
